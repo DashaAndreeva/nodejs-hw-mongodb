@@ -18,12 +18,8 @@ export const getAllContactsController = async (req, res, next) => {
   });
 };
 
-export const getContactByIdController = async (err, req, res, next) => {
-  const contactId = req.params.contactId;
-  if (!mongoose.Types.ObjectId.isValid(contactId)) {
-    throw new Error('Invalid contact ID');
-  }
-
+export const getContactByIdController = async (req, res, next) => {
+  const { contactId } = req.params;
   const contact = await getContactById(contactId);
 
   if (!contact) {
@@ -31,7 +27,7 @@ export const getContactByIdController = async (err, req, res, next) => {
     return;
   }
 
-  res.status(200).json({
+  res.json({
     status: 200,
     message: `Successfully found contact with id ${contactId}!`,
     data: contact,
