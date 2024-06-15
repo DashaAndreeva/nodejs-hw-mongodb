@@ -18,18 +18,12 @@ export const createContactSchema = Joi.object({
     'string.min': 'Email should have at least 3 characters',
     'string.max': 'Email should have at most 20 characters',
   }),
-  isFavourite: Joi.boolean().required().messages({
-    'any.required': 'isFavourite is required',
+  isFavourite: Joi.boolean(),
+  contactType: Joi.string().valid('work', 'home', 'personal').messages({
+    'string.base': 'ContactType should be a string',
+    'string.min': 'ContactType should have at least 3 characters',
+    'string.max': 'ContactType should have at most 20 characters',
   }),
-  contactType: Joi.string()
-    .valid('work', 'home', 'personal')
-    .required()
-    .messages({
-      'string.base': 'ContactType should be a string',
-      'string.min': 'ContactType should have at least 3 characters',
-      'string.max': 'ContactType should have at most 20 characters',
-      'any.required': 'ContactType is required',
-    }),
 });
 
 export const updateContactSchema = Joi.object({
