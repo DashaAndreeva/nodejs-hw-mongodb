@@ -15,14 +15,14 @@ import { env } from '../utils/env.js';
 export const getAllContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
-  const userId = req.user._id;
+  const userId = req.user._id; // Зміна: додано userId
 
   const contacts = await getAllContacts({
     page,
     perPage,
     sortBy,
     sortOrder,
-    userId,
+    userId, // Зміна: передано userId
   });
 
   res.json({
@@ -34,9 +34,9 @@ export const getAllContactsController = async (req, res) => {
 
 export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
-  const userId = req.user._id;
+  const userId = req.user._id; // Зміна: додано userId
 
-  const contact = await getContactById(contactId, userId);
+  const contact = await getContactById(contactId, userId); // Зміна: передано userId
 
   if (!contact) {
     next(createHttpError(404, 'Contact not found'));
@@ -51,7 +51,7 @@ export const getContactByIdController = async (req, res, next) => {
 };
 
 export const createContactController = async (req, res) => {
-  const userId = req.user._id;
+  const userId = req.user._id; // Зміна: додано userId
   const photo = req.file;
 
   let photoUrl;
@@ -64,7 +64,7 @@ export const createContactController = async (req, res) => {
     }
   }
 
-  const contact = await createContact({ ...req.body, photo: photoUrl }, userId);
+  const contact = await createContact({ ...req.body, photo: photoUrl }, userId); // Зміна: передано userId
 
   res.status(201).json({
     status: 201,
@@ -75,9 +75,9 @@ export const createContactController = async (req, res) => {
 
 export const deleteContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const userId = req.user._id;
+  const userId = req.user._id; // Зміна: додано userId
 
-  const contact = await deleteContact(contactId, userId);
+  const contact = await deleteContact(contactId, userId); // Зміна: передано userId
 
   if (!contact) {
     next(createHttpError(404, 'Contact not found'));
@@ -89,11 +89,11 @@ export const deleteContactController = async (req, res, next) => {
 
 export const upsertContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const userId = req.user._id;
+  const userId = req.user._id; // Зміна: додано userId
 
   const result = await updateContact(
     contactId,
-    { ...req.body, userId },
+    { ...req.body, userId }, // Зміна: додано userId
     { upsert: true },
   );
 
@@ -113,7 +113,7 @@ export const upsertContactController = async (req, res, next) => {
 
 export const patchContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const userId = req.user._id;
+  const userId = req.user._id; // Зміна: додано userId
   const photo = req.file;
 
   let photoUrl;
@@ -129,7 +129,7 @@ export const patchContactController = async (req, res, next) => {
   const result = await updateContact(contactId, {
     ...req.body,
     photo: photoUrl,
-    userId,
+    userId, // Зміна: додано userId
   });
 
   if (!result) {
