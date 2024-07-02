@@ -11,7 +11,7 @@ parameters:
     required: true
     schema:
       type: string
-      example: '665aa73c16c74907b7913a71'
+      example: '665aa73c16c74907b7913a73'
 responses:
   '200':
     description: 'Get contact by id'
